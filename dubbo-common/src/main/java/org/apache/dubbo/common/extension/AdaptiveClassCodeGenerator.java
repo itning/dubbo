@@ -250,6 +250,7 @@ public class AdaptiveClassCodeGenerator {
             if (i == value.length - 1) {
                 if (null != defaultExtName) {
                     if (!"protocol".equals(value[i])) {
+                        // org.apache.dubbo.rpc.Invocation
                         if (hasInvocation) {
                             getNameCode = String.format("url.getMethodParameter(methodName, \"%s\", \"%s\")", value[i], defaultExtName);
                         } else {
