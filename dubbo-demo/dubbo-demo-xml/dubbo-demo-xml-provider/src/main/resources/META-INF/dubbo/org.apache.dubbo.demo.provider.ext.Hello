@@ -1,0 +1,3 @@
+a=org.apache.dubbo.demo.provider.ext.impl.OneImpl
+b=org.apache.dubbo.demo.provider.ext.impl.TwoImpl
+a=org.apache.dubbo.demo.provider.ext.impl.HelloWrapper
