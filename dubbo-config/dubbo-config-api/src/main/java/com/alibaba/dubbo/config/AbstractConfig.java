@@ -103,6 +103,8 @@ public abstract class AbstractConfig implements Serializable {
                     String property = StringUtils.camelToSplitName(name.substring(3, 4).toLowerCase() + name.substring(4), ".");
 
                     String value = null;
+                    // 判断该配置是否配置了ID，如果配置了ID则找该ID的配置
+                    // 例如ID为myProvider则 下边会拼成 dubbo.provider.myProvider.xxx
                     if (config.getId() != null && config.getId().length() > 0) {
                         String pn = prefix + config.getId() + "." + property;
                         value = System.getProperty(pn);
@@ -112,6 +114,7 @@ public abstract class AbstractConfig implements Serializable {
                     }
                     if (value == null || value.length() == 0) {
                         String pn = prefix + property;
+                        // dubbo.provider.host 从System.getProperty取
                         value = System.getProperty(pn);
                         if (!StringUtils.isBlank(value)) {
                             logger.info("Use System Property " + pn + " to config dubbo");
@@ -119,6 +122,7 @@ public abstract class AbstractConfig implements Serializable {
                     }
                     if (value == null || value.length() == 0) {
                         Method getter;
+                        // 找get属性存在是否
                         try {
                             getter = config.getClass().getMethod("get" + name.substring(3));
                         } catch (NoSuchMethodException e) {
@@ -128,9 +132,12 @@ public abstract class AbstractConfig implements Serializable {
                                 getter = null;
                             }
                         }
+                        // 如果get属性存在
                         if (getter != null) {
+                            // 取get属性的值 为空
                             if (getter.invoke(config) == null) {
                                 if (config.getId() != null && config.getId().length() > 0) {
+                                    // 尝试取dubbo.properties
                                     value = ConfigUtils.getProperty(prefix + config.getId() + "." + property);
                                 }
                                 if (value == null || value.length() == 0) {
@@ -139,6 +146,7 @@ public abstract class AbstractConfig implements Serializable {
                                 if (value == null || value.length() == 0) {
                                     String legacyKey = legacyProperties.get(prefix + property);
                                     if (legacyKey != null && legacyKey.length() > 0) {
+                                        // 尝试从老的dubbo配置KEY中取
                                         value = convertLegacyValue(legacyKey, ConfigUtils.getProperty(legacyKey));
                                     }
                                 }

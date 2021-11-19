@@ -178,6 +178,7 @@ public class ConfigUtils {
         if (value != null && value.length() > 0) {
             return value;
         }
+        // 尝试取dubbo.properties
         Properties properties = getProperties();
         return replaceProperty(properties.getProperty(key, defaultValue), (Map) properties);
     }

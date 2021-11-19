@@ -152,6 +152,8 @@ public class RegistryProtocol implements Protocol {
 
         // Subscribe the override data
         // FIXME When the provider subscribes, it will affect the scene : a certain JVM exposes the service and call the same service. Because the subscribed is cached key with the name of the service, it causes the subscription information to cover.
+        // 订阅覆盖 在admin上操作 会监听 dubbo/${serviceName}/configuration
+        // override://192.168.32.1/top.itning.ProviderService?category=configurators&dynamic=false&weight=200
         final URL overrideSubscribeUrl = getSubscribedOverrideUrl(registeredProviderUrl);
         final OverrideListener overrideSubscribeListener = new OverrideListener(overrideSubscribeUrl, originInvoker);
         overrideListeners.put(overrideSubscribeUrl, overrideSubscribeListener);
