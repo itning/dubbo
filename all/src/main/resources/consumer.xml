@@ -4,16 +4,9 @@
        xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
        xsi:schemaLocation="http://www.springframework.org/schema/beans        http://www.springframework.org/schema/beans/spring-beans.xsd        http://code.alibabatech.com/schema/dubbo        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
-    <dubbo:application name="test-application"/>
+    <dubbo:application name="test-application-consumer"/>
 
     <dubbo:registry address="zookeeper://127.0.0.1:2181" />
 
-    <!--服务发布的配置，需要暴露的服务接口-->
-    <dubbo:service
-            interface="top.itning.ProviderService"
-            ref="providerService"/>
-
-    <!--Bean bean定义-->
-    <bean id="providerService" class="top.itning.ProviderServiceImpl"/>
-
+    <dubbo:reference id="providerService" interface="top.itning.ProviderService"/>
 </beans>
