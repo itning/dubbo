@@ -402,6 +402,7 @@ public class ReferenceConfig<T> extends AbstractReferenceConfig {
             }
 
             if (urls.size() == 1) {
+                // 当只有一个注册中心的时候 registry://127.0.0.1:2181/com.alibaba.dubbo.registry.RegistryService?application=test-application-consumer&dubbo=2.0.2&pid=21604&refer=application%3Dtest-application-consumer%26dubbo%3D2.0.2%26interface%3Dtop.itning.ProviderService%26methods%3DsayHello%26pid%3D21604%26register.ip%3D192.168.136.1%26side%3Dconsumer%26timestamp%3D1637386974903&registry=zookeeper&timestamp=1637386974921
                 invoker = refprotocol.refer(interfaceClass, urls.get(0));
             } else {
                 List<Invoker<?>> invokers = new ArrayList<Invoker<?>>();
@@ -421,7 +422,7 @@ public class ReferenceConfig<T> extends AbstractReferenceConfig {
                 }
             }
         }
-
+        // 检查是否可用
         Boolean c = check;
         if (c == null && consumer != null) {
             c = consumer.isCheck();
